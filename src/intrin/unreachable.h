@@ -10,13 +10,6 @@ struct [[maybe_unused]] unreachable_t final {
 
   [[noreturn]] constexpr static auto unreachable_impl() -> unreachable_t;
 
-  // template <typename T>
-  //  we want implicit conversion because we cannot create `unreachable_t`
-  //  NOLINTNEXTLINE(*-explicit-*)
-  //[[noreturn]] constexpr operator T() const noexcept {
-  //   unreachable_impl();
-  // }
-
   template <typename T>
   // we want implicit conversion because we cannot create `unreachable_t`
   // NOLINTNEXTLINE(*-explicit-*)
@@ -30,18 +23,6 @@ struct [[maybe_unused]] unreachable_t final {
     unreachable_impl();
   }
 };
-
-template <typename _>
-constexpr bool _always_false = false;
-
-template <typename T>
-constexpr auto _is_consteval() {
-  if (std::same_as<T, void>) {
-    return int{};
-  } else {
-    return double{};
-  }
-}
 
 [[noreturn]] inline constexpr auto unreachable() -> unreachable_t {
   if consteval {
