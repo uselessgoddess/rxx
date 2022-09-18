@@ -33,7 +33,7 @@ struct [[maybe_unused]] unreachable_t final {
     // an empty function body and the noreturn attribute.
 #if defined(__GNUC__) || defined(__clang__) || defined(__INTEL_COMPILER)  // GCC, Clang, ICC
     __builtin_unreachable();
-#elifdef _MSC_VER  // MSVC
+#elif defined(_MSC_VER)  // MSVC
     __assume(false);
 #else
     std::abort();
